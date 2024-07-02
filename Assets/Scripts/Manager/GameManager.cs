@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     // Pause Properties
     public event Action onPause;
     public event Action onResume;
-    private bool isPaused;
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -27,12 +27,28 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        onPause += PauseBehaviours;
+        onResume += ResumeBehaviours;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        onPause -= PauseBehaviours;
+        onResume -= ResumeBehaviours;
+    }
+
+    public bool GetIsPaused()
+    {
+        return isPaused;
+    }
+
+    private void PauseBehaviours()
+    {
+        isPaused = true;
+    }
+
+    private void ResumeBehaviours()
+    {
+        isPaused = false;
     }
 }
