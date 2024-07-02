@@ -6,14 +6,18 @@ public class Wood : MonoBehaviour
 {
     [Header("Spawn Wood Properties")]
     [SerializeField] private bool isPickedUp = false;
-    [SerializeField] private float lifeTime;
     private Renderer meshRenderer;
+    [SerializeField] private float lifeTime;
     private float lifeTimer = 0;
 
     [Header("Blink Properties")]
     [SerializeField] [Range(0.1f,1)] private float blinkRatio; // Ratio of lifeTime that object will be blinking
     [SerializeField] [Range(0.1f,1)] private float invisRatio; // Ratio of blinking time that renderer is invisible
     private float blinkTimer = 0;
+
+    private enum WoodType { Birch, Maple, Spruce}
+    [Header("Wood Type Properties")]
+    [SerializeField] private WoodType type;
 
     private void Awake()
     {
@@ -24,13 +28,13 @@ public class Wood : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButton(0)) meshRenderer.enabled = false;
+
         if (isPickedUp) return;
 
         lifeTimer += Time.deltaTime;
 
-        if (lifeTimer > lifeTime * 0.5f) ManageBlink();
-
-        if (lifeTimer > lifeTime) Destroy(gameObject);
+        if (lifeTimer > lifeTime / 2) ManageBlink();
     }
 
     public void PickedUp()
@@ -49,10 +53,7 @@ public class Wood : MonoBehaviour
     private void ManageBlink()
     {
         blinkTimer += Time.deltaTime;
-        if (blinkTimer > (blinkRatio - invisRatio))
-        {
-            meshRenderer.enabled = false;
-        }
+        if (blinkTimer > (blinkRatio - invisRatio)) meshRenderer.enabled = false;
 
         if (blinkTimer > blinkRatio)
         {

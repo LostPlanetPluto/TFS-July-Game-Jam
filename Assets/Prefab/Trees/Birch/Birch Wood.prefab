@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3917288706226062536}
   - component: {fileID: 8181351605857609253}
-  - component: {fileID: 3553098781408071542}
+  - component: {fileID: 467887375189499503}
   m_Layer: 0
   m_Name: Birch Wood
   m_TagString: Untagged
@@ -93,7 +93,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3553098781408071542
+--- !u!114 &467887375189499503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,6 +109,7 @@ MonoBehaviour:
   lifeTime: 10
   blinkRatio: 0.5
   invisRatio: 0.2
+  type: 0
 --- !u!1 &8698568234483652309
 GameObject:
   m_ObjectHideFlags: 0
