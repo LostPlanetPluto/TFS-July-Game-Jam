@@ -6,8 +6,8 @@ public class Wood : MonoBehaviour
 {
     [Header("Spawn Wood Properties")]
     [SerializeField] private bool isPickedUp = false;
-    [SerializeField] private Renderer meshRenderer;
     [SerializeField] private float lifeTime;
+    private Renderer meshRenderer;
     private float lifeTimer = 0;
 
     [Header("Blink Properties")]
@@ -24,13 +24,13 @@ public class Wood : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0)) meshRenderer.enabled = false;
-
         if (isPickedUp) return;
 
         lifeTimer += Time.deltaTime;
 
-        if (lifeTimer > lifeTime / 2) ManageBlink();
+        if (lifeTimer > lifeTime * 0.5f) ManageBlink();
+
+        if (lifeTimer > lifeTime) Destroy(gameObject);
     }
 
     public void PickedUp()
@@ -49,7 +49,10 @@ public class Wood : MonoBehaviour
     private void ManageBlink()
     {
         blinkTimer += Time.deltaTime;
-        if (blinkTimer > (blinkRatio - invisRatio)) meshRenderer.enabled = false;
+        if (blinkTimer > (blinkRatio - invisRatio))
+        {
+            meshRenderer.enabled = false;
+        }
 
         if (blinkTimer > blinkRatio)
         {
