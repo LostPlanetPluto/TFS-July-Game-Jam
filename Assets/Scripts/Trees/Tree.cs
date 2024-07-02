@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Tree : MonoBehaviour
+public class Tree : MonoBehaviour, I_HealthComponent
 {
     private bool isPaused = false;
+
+    [Header("Health Properties")]
+    [SerializeField] private float maxHealth;
+    public float health { get; set; }
 
     [Header("Spawn Properties")]
     [SerializeField] private float spawnTime;
@@ -14,9 +19,13 @@ public class Tree : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask treeLayer;
 
+    [Header("Spawn Wood Properties")]
+    [SerializeField] private GameObject woodStack;
+    [SerializeField] private int spawnCount;
+    [SerializeField] private float spawnVelocity;
+
     // spawn location checks;
     private int spawnCheckCount = 3;
-
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +36,8 @@ public class Tree : MonoBehaviour
             GameManager.instance.onResume += ResumeBehaviours;
             isPaused = GameManager.instance.GetIsPaused();
         }
+
+        health = maxHealth;
     }
 
     private void OnDestroy()
@@ -44,28 +55,7 @@ public class Tree : MonoBehaviour
     {
         if (isPaused) return;
 
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer > spawnTime)
-        {
-            spawnTimer = 0;
-
-            for (int i = 0; i < spawnCheckCount; i++)
-            {
-                Vector3 spawnLocation = GetSpawnLocation();
-
-
-                // Sphere check to ensure there are no other trees near spawn location
-                Physics.SphereCast(spawnLocation, minSpawnRange, transform.up, out RaycastHit treeHitInfo, minSpawnRange, treeLayer);
-
-                if (treeHitInfo.transform != null)
-                {
-                    // spawn if no trees found
-                    Instantiate(gameObject, spawnLocation, transform.rotation);
-                    break;
-                }
-            }
-
-        }
+        ManageSpawning();
     }
 
     private void PauseBehaviours()
@@ -76,6 +66,29 @@ public class Tree : MonoBehaviour
     private void ResumeBehaviours()
     {
         isPaused = false;
+    }
+
+    private void ManageSpawning()
+    {
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer > spawnTime)
+        {
+            spawnTimer = 0;
+
+            for (int i = 0; i < spawnCheckCount; i++)
+            {
+                Vector3 spawnLocation = GetSpawnLocation();
+
+                // Sphere check to ensure there are no other trees near spawn location
+                Collider [] trees = Physics.OverlapSphere(spawnLocation, minSpawnRange, treeLayer);
+
+                if (trees.Length == 0)
+                {
+                    Instantiate(gameObject, spawnLocation, transform.rotation);
+                    break;
+                }
+            }
+        }
     }
 
     private Vector3 GetSpawnLocation()
@@ -96,5 +109,30 @@ public class Tree : MonoBehaviour
         if (raycastHit.transform != null) return raycastHit.point;
 
         else return GetSpawnLocation();
+    }
+
+    public void OnTakeDamage(float damage)
+    {
+        health -= damage;
+
+        SpawnWood();
+
+        if (health < 0) Destroy(gameObject);
+    }
+
+    private void SpawnWood()
+    {
+        if (woodStack == null) return;
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            Vector3 spawnDirection = new Vector3(Random.Range(-1, 1), Random.Range(0.5f, 0.7f), Random.Range(-1, 1));
+
+            GameObject wood = Instantiate(woodStack, transform.position + Vector3.up, transform.rotation);
+
+            Rigidbody rb = wood.GetComponent<Rigidbody>();
+            rb.AddForce(spawnDirection * spawnVelocity, ForceMode.Impulse);
+            rb.angularVelocity = spawnDirection * spawnVelocity;
+        }
     }
 }
