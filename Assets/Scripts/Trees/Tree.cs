@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
+    private bool isPaused = false;
+
     [Header("Spawn Properties")]
     [SerializeField] private float spawnTime;
     [SerializeField] private float maxSpawnRange;
     [SerializeField] private float minSpawnRange;
     private float spawnTimer = 0;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask treeLayer;
 
-    private bool isPaused = false;
+    // spawn location checks;
+    private int spawnCheckCount = 3;
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +48,23 @@ public class Tree : MonoBehaviour
         if (spawnTimer > spawnTime)
         {
             spawnTimer = 0;
-            Instantiate(gameObject, GetSpawnLocation(), transform.rotation);
+
+            for (int i = 0; i < spawnCheckCount; i++)
+            {
+                Vector3 spawnLocation = GetSpawnLocation();
+
+
+                // Sphere check to ensure there are no other trees near spawn location
+                Physics.SphereCast(spawnLocation, minSpawnRange, transform.up, out RaycastHit treeHitInfo, minSpawnRange, treeLayer);
+
+                if (treeHitInfo.transform != null)
+                {
+                    // spawn if no trees found
+                    Instantiate(gameObject, spawnLocation, transform.rotation);
+                    break;
+                }
+            }
+
         }
     }
 
@@ -63,13 +84,9 @@ public class Tree : MonoBehaviour
         float xPosition = Random.Range(minSpawnRange, maxSpawnRange);
         if (Random.value < 0.5f) xPosition = -xPosition;
 
-        Debug.Log($"x is {xPosition}");
-
         // Get Random z value within spawn range
         float zPosition = Random.Range(minSpawnRange, maxSpawnRange);
         if (Random.value < 0.5f) zPosition = -zPosition;
-
-        Debug.Log($"z is {zPosition}");
 
         // Checck if tree will spawn above ground        
         Ray ray = new Ray(transform.position + new Vector3(xPosition, 1, zPosition), -Vector3.up);
