@@ -6,7 +6,7 @@ public class Wood : MonoBehaviour
 {
     [Header("Spawn Wood Properties")]
     [SerializeField] private bool isPickedUp = false;
-    [SerializeField] private Renderer meshRenderer;
+    private Renderer meshRenderer;
     [SerializeField] private float lifeTime;
     private float lifeTimer = 0;
 
@@ -14,6 +14,10 @@ public class Wood : MonoBehaviour
     [SerializeField] [Range(0.1f,1)] private float blinkRatio; // Ratio of lifeTime that object will be blinking
     [SerializeField] [Range(0.1f,1)] private float invisRatio; // Ratio of blinking time that renderer is invisible
     private float blinkTimer = 0;
+
+    private enum WoodType { Birch, Maple, Spruce}
+    [Header("Wood Type Properties")]
+    [SerializeField] private WoodType type;
 
     private void Awake()
     {

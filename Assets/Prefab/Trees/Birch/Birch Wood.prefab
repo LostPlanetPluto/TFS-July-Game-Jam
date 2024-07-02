@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3917288706226062536}
   - component: {fileID: 8181351605857609253}
+  - component: {fileID: 467887375189499503}
   m_Layer: 0
   m_Name: Birch Wood
   m_TagString: Untagged
@@ -92,6 +93,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &467887375189499503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604608871286186212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ee871d45abe8743a666bb8db62da4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPickedUp: 0
+  lifeTime: 10
+  blinkRatio: 0.5
+  invisRatio: 0.2
+  type: 0
 --- !u!1 &8698568234483652309
 GameObject:
   m_ObjectHideFlags: 0
