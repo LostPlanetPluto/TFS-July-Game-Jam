@@ -8,22 +8,29 @@ public class Wood : MonoBehaviour
     [SerializeField] private bool isPickedUp = false;
     [SerializeField] private Renderer meshRenderer;
     [SerializeField] private float lifeTime;
-    [SerializeField] private float blinkTime;
-    [SerializeField] private float invisTime;
     private float lifeTimer = 0;
+
+    [Header("Blink Properties")]
+    [SerializeField] [Range(0.1f,1)] private float blinkRatio; // Ratio of lifeTime that object will be blinking
+    [SerializeField] [Range(0.1f,1)] private float invisRatio; // Ratio of blinking time that renderer is invisible
+    private float blinkTimer = 0;
 
     private void Awake()
     {
-        meshRenderer = GetComponent<Renderer>();
+        meshRenderer = GetComponentInChildren<Renderer>();
+        blinkRatio = lifeTime / 4 * blinkRatio;
+        invisRatio = blinkRatio * invisRatio;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
+        if (Input.GetMouseButton(0)) meshRenderer.enabled = false;
+
         if (isPickedUp) return;
 
         lifeTimer += Time.deltaTime;
 
-        if (lifeTimer > lifeTime) Destroy(gameObject);
+        if (lifeTimer > lifeTime / 2) ManageBlink();
     }
 
     public void PickedUp()
@@ -36,5 +43,19 @@ public class Wood : MonoBehaviour
     {
         isPickedUp = false;
         lifeTimer = 0;
+        blinkTimer = 0;
+    }
+
+    private void ManageBlink()
+    {
+        blinkTimer += Time.deltaTime;
+        if (blinkTimer > (blinkRatio - invisRatio)) meshRenderer.enabled = false;
+
+        if (blinkTimer > blinkRatio)
+        {
+            meshRenderer.enabled = true;
+            blinkTimer = 0;
+        }
+
     }
 }
