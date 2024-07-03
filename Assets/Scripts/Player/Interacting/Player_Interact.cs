@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_Interact : MonoBehaviour
@@ -8,17 +9,25 @@ public class Player_Interact : MonoBehaviour
     [SerializeField] private Transform interactPoint;
     [SerializeField] private float radius;
 
+    [Header("Pickup Properties")]
+    [SerializeField] private int inventorySize;
+    [SerializeField] private Transform[] pickUpPoints = new Transform[3];
+    [SerializeField] private Wood[] woodStacks = new Wood[3];
 
-    // Start is called before the first frame update
-    void Start()
+    private Wood.WoodType woodTypeStacked = Wood.WoodType.None;
+
+    private void Awake()
     {
-        
+        inventorySize = pickUpPoints.Length;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) Interact();
+
+        if (Input.GetKeyDown(KeyCode.E)) Pickup();
+
+        if (Input.GetKeyDown(KeyCode.R)) Drop();
     }
 
     public void Interact()
@@ -32,5 +41,46 @@ public class Player_Interact : MonoBehaviour
         I_HealthComponent healthComp = objects[0].GetComponentInParent<I_HealthComponent>();
 
         if (healthComp != null) healthComp.OnTakeDamage(10);
+    }
+
+    private void Pickup()
+    {
+        Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius);
+
+        if (objects.Length == 0) return;
+
+        Wood wood = objects[0].GetComponentInParent<Wood>();
+
+        if (wood == null) return;
+
+        if (woodTypeStacked != Wood.WoodType.None && woodTypeStacked != wood.type) return;
+
+        for (int i = 0; i < inventorySize; i++)
+        {
+            if (woodStacks[i] != null) continue;
+
+            wood.PickedUp();
+            woodStacks[i] = wood;
+            wood.transform.parent = pickUpPoints[i].transform;
+            wood.transform.localPosition = Vector3.zero;
+            wood.transform.rotation = pickUpPoints[i].transform.rotation;
+            woodTypeStacked = wood.type;
+
+            break;
+        }
+    }
+
+    private void Drop()
+    {
+        for (int i = 0; i < inventorySize; i++) 
+        {
+            if (woodStacks[i] == null) break;
+
+            woodStacks[i].Dropped();
+            woodStacks[i].transform.parent = null;
+            woodStacks[i] = null;
+        }
+
+        woodTypeStacked = Wood.WoodType.None;
     }
 }

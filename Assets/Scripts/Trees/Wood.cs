@@ -15,21 +15,26 @@ public class Wood : MonoBehaviour
     [SerializeField] [Range(0.1f,1)] private float invisRatio; // Ratio of blinking time that renderer is invisible
     private float blinkTimer = 0;
 
-    private enum WoodType { Birch, Maple, Spruce}
+    public enum WoodType { Birch, Maple, Spruce, None}
     [Header("Wood Type Properties")]
-    [SerializeField] private WoodType type;
+    public WoodType type;
+
+
+    private Rigidbody rb;
+    private Collider col;
 
     private void Awake()
     {
         meshRenderer = GetComponentInChildren<Renderer>();
         blinkRatio = lifeTime / 4 * blinkRatio;
         invisRatio = blinkRatio * invisRatio;
+    
+        rb = GetComponent<Rigidbody>();
+        col = GetComponentInChildren<Collider>();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButton(0)) meshRenderer.enabled = false;
-
         if (isPickedUp) return;
 
         lifeTimer += Time.deltaTime;
@@ -41,6 +46,10 @@ public class Wood : MonoBehaviour
     {
         isPickedUp = true;
         meshRenderer.enabled = true;
+
+        // Disable Rigidbody and collider;
+        rb.isKinematic = true;
+        col.enabled = false;
     }
 
     public void Dropped()
@@ -48,6 +57,10 @@ public class Wood : MonoBehaviour
         isPickedUp = false;
         lifeTimer = 0;
         blinkTimer = 0;
+
+        // Re enable Rigidbody and collider
+        rb.isKinematic = false;
+        col.enabled = true;
     }
 
     private void ManageBlink()
@@ -60,6 +73,5 @@ public class Wood : MonoBehaviour
             meshRenderer.enabled = true;
             blinkTimer = 0;
         }
-
     }
 }
