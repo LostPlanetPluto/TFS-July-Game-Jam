@@ -37,10 +37,46 @@ public class Player_Interact : MonoBehaviour
         // Return if no objects are found
         if (objects.Length == 0) return;
 
+        #region <---- Interact Tree ---->    
         // Check to see if objects can be damaged
         I_HealthComponent healthComp = objects[0].GetComponentInParent<I_HealthComponent>();
 
-        if (healthComp != null) healthComp.OnTakeDamage(10);
+        if (healthComp != null)
+        {
+            healthComp.OnTakeDamage(10);
+            return;
+        }
+
+        #endregion
+
+        #region <---- Log Holder ---->
+
+        #endregion
+
+        #region <---- Deliver Box ---->
+        DeliveryBox deliveryBox = objects[0].GetComponentInParent<DeliveryBox>();
+
+        if (deliveryBox != null)
+        {
+            for (int i = inventorySize - 1; i >= 0; i--)
+            {
+                if (woodStacks[i] != null)
+                {
+                    if (deliveryBox.CheckAvailableSpace())
+                    {
+                        deliveryBox.TakeWood(ref woodStacks[i]);
+                        woodStacks[i] = null;
+                    }
+
+                    Debug.Log(deliveryBox.CheckAvailableSpace());
+                }
+            }
+
+            if (woodStacks[0] == null) woodTypeStacked = Wood.WoodType.None;
+        }
+
+
+        #endregion
     }
 
     private void Pickup()

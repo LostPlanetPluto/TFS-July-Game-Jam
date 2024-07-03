@@ -40,6 +40,8 @@ public class Wood : MonoBehaviour
         lifeTimer += Time.deltaTime;
 
         if (lifeTimer > lifeTime / 2) ManageBlink();
+
+        if (lifeTimer > lifeTime) Destroy(gameObject);
     }
 
     public void PickedUp()
