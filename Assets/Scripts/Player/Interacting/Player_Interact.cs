@@ -51,6 +51,28 @@ public class Player_Interact : MonoBehaviour
 
         #region <---- Log Holder ---->
 
+        LogHolder logHolder = objects[0].GetComponentInParent<LogHolder>();
+
+        if (logHolder != null)
+        {
+            if (woodTypeStacked != logHolder.GetWoodType()) return;
+
+            for (int i = inventorySize - 1; i >= 0; i--)
+            {
+                if (woodStacks[i] != null)
+                {
+                    if (logHolder.CheckAvailableSpace())
+                    {
+                        logHolder.TakeWood(ref woodStacks[i]);
+                        woodStacks[i] = null;
+                    }
+                }
+            }
+
+            if (woodStacks[0] == null) woodTypeStacked = Wood.WoodType.None;
+            return;
+        }
+
         #endregion
 
         #region <---- Deliver Box ---->
@@ -67,12 +89,11 @@ public class Player_Interact : MonoBehaviour
                         deliveryBox.TakeWood(ref woodStacks[i]);
                         woodStacks[i] = null;
                     }
-
-                    Debug.Log(deliveryBox.CheckAvailableSpace());
                 }
             }
 
             if (woodStacks[0] == null) woodTypeStacked = Wood.WoodType.None;
+            return;
         }
 
 
@@ -81,9 +102,46 @@ public class Player_Interact : MonoBehaviour
 
     private void Pickup()
     {
+        if (woodStacks[inventorySize - 1] != null) return;
+
         Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius);
 
         if (objects.Length == 0) return;
+
+
+        #region  <---- Log Holder ---->
+
+        LogHolder logHolder = objects[0].GetComponentInParent<LogHolder>();
+
+        if (logHolder != null && woodStacks[inventorySize -1] == null)
+        {
+            if (woodTypeStacked == logHolder.GetWoodType() || woodTypeStacked == Wood.WoodType.None)
+            {
+                Wood logHolderItem = logHolder.PickUpWood();
+
+                if (logHolderItem != null)
+                {
+                    for (int i = 0; i < inventorySize; i++)
+                    {
+                        if (woodStacks[i] != null) continue;
+
+                        logHolderItem.PickedUp();
+                        woodStacks[i] = logHolderItem;
+                        logHolderItem.transform.parent = pickUpPoints[i].transform;
+                        logHolderItem.transform.localPosition = Vector3.zero;
+                        logHolderItem.transform.rotation = pickUpPoints[i].transform.rotation;
+                        woodTypeStacked = logHolderItem.type;
+                        
+                        return;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+
+        #region <----  Loose Wood ---->
 
         Wood wood = objects[0].GetComponentInParent<Wood>();
 
@@ -104,6 +162,8 @@ public class Player_Interact : MonoBehaviour
 
             break;
         }
+
+        #endregion
     }
 
     private void Drop()
