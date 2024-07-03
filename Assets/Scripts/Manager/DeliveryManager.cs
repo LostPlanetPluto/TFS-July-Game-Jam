@@ -33,7 +33,9 @@ public class DeliveryManager : Pauseable
 
         if (spawnTimer > spawnTime && orders.Count <= maxOrder)
         {
-            orders.Add(Random.Range(0, orderTypes.Count));
+            int randomIndex = Random.Range(0, orderTypes.Count);
+
+            orders.Add(randomIndex);
 
 
                 // GAME OVER LOGIC HERE
@@ -42,7 +44,7 @@ public class DeliveryManager : Pauseable
                 
                 
                 
-            if (OrderUIManager.instance != null) OrderUIManager.instance.SpawnOrderUI();
+            if (OrderUIManager.instance != null) OrderUIManager.instance.SpawnOrderUI(orderTypes[randomIndex].icon);
 
             spawnTimer = 0;
         }
@@ -64,7 +66,7 @@ public class DeliveryManager : Pauseable
             {
                 orderToRemove = order;
 
-                if (OrderUIManager.instance != null) OrderUIManager.instance.RemoveOrder(order);
+                if (OrderUIManager.instance != null) OrderUIManager.instance.RemoveOrder(orders.IndexOf(order));
 
                 break;
             }

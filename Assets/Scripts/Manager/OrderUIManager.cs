@@ -18,7 +18,7 @@ public class OrderUIManager : MonoBehaviour
         instance = this;
     }
 
-    public void SpawnOrderUI()
+    public void SpawnOrderUI(Sprite icon)
     {
         if (ordersUIObject.Count > uiEndPositions.Count) return;
 
@@ -27,6 +27,7 @@ public class OrderUIManager : MonoBehaviour
             if (uiEndPositions[i].childCount > 0) continue;
 
             UI_Order order = Instantiate(orderUIPF, uiEndPositions[i]).GetComponent<UI_Order>();
+            order.SetIcon(icon);
 
             ordersUIObject.Add(order);
 
@@ -36,15 +37,14 @@ public class OrderUIManager : MonoBehaviour
 
     public void RemoveOrder(int index)
     {
-        ordersUIObject[index].transform.parent = null;
         ordersUIObject[index].OrderFilled();
+        Debug.Log($"The object that is being filled is at: {index}");
         ordersUIObject.RemoveAt(index);
 
-        /*
         for (int i = index; i < ordersUIObject.Count; i++)
         {
             ordersUIObject[i].transform.parent = uiEndPositions[i].transform;
             ordersUIObject[i].MoveOver();
-        }*/
+        }
     }
 }

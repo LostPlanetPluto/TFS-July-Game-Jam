@@ -26,13 +26,14 @@ public class Player_Movement : MonoBehaviour
     void Update()
     {
         direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        
+        Move();
+
+        GroundCheck();
     }
 
     private void FixedUpdate()
     {
-        Move();
-
-        GroundCheck();
     }
 
     private void Move()
@@ -41,8 +42,18 @@ public class Player_Movement : MonoBehaviour
         {
             if (direction == Vector3.zero) return;
 
-            if (GroundCheck()) rb.AddForce(direction * moveSpeed * Time.deltaTime);
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            Vector3 camForward = Camera.main.transform.forward * Input.GetAxis("Vertical");
+            camForward.y = 0;
+            camForward.Normalize();
+
+            Vector3 camRight = Camera.main.transform.right * Input.GetAxis("Horizontal");
+            camRight.y = 0;
+            camRight.Normalize();
+
+            Vector3 movementDirection = camForward + camRight;
+
+            if (GroundCheck()) rb.AddForce(movementDirection * moveSpeed * Time.deltaTime);
+            float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVel, turnTime);
             transform.rotation = Quaternion.Euler(0, angle, 0);
         }

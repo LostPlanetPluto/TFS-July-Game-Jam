@@ -12,8 +12,10 @@ public class UI_Order : MonoBehaviour
     [SerializeField] private float duration = 3;
     private bool movingOver = false;
     private float startingXPosition;
-
     private float moveTimer = 0;
+
+    [Header("Icon Properties")]
+    [SerializeField] private SpriteRenderer iconSR;
 
     private void Awake()
     {
@@ -54,5 +56,10 @@ public class UI_Order : MonoBehaviour
 
         movingOver = true;
         startingXPosition = transform.localPosition.x;
+    }
+
+    public void SetIcon(Sprite icon)
+    {
+        iconSR.sprite = icon;
     }
 }

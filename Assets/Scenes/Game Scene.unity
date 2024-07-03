@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 29077437}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38352698, y: 0.3481515, z: -0.1588621, w: 0.84051204}
+  m_LocalRotation: {x: 0.38352698, y: 0.34815148, z: -0.15886207, w: 0.84051204}
   m_LocalPosition: {x: -15.030001, y: 16.3, z: -8.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -314,7 +314,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50081410}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.38352698, y: 0.3481515, z: -0.1588621, w: 0.84051204}
+  m_LocalRotation: {x: 0.38352698, y: 0.34815148, z: -0.15886207, w: 0.84051204}
   m_LocalPosition: {x: -15.030001, y: 16.3, z: -8.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1009,7 +1009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5171709616894753703, guid: 249c99b9aa4e49841ad58f27e7d4e47c, type: 3}
       propertyPath: maxOrder
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5171709616894753703, guid: 249c99b9aa4e49841ad58f27e7d4e47c, type: 3}
       propertyPath: spawnTime
