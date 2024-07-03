@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Tree : MonoBehaviour, I_HealthComponent
+public class Tree : Pauseable, I_HealthComponent
 {
-    private bool isPaused = false;
-
     [Header("Health Properties")]
     [SerializeField] private float maxHealth;
     public float health { get; set; }
@@ -28,44 +26,18 @@ public class Tree : MonoBehaviour, I_HealthComponent
     private int spawnCheckCount = 3;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        if (GameManager.instance)
-        {
-            GameManager.instance.onPause += PauseBehaviours;
-            GameManager.instance.onResume += ResumeBehaviours;
-            isPaused = GameManager.instance.GetIsPaused();
-        }
+        base.Start();
 
         health = maxHealth;
     }
-
-    private void OnDestroy()
-    {
-        if (GameManager.instance)
-        {
-            GameManager.instance.onPause -= PauseBehaviours;
-            GameManager.instance.onResume -= ResumeBehaviours;
-        }
-    }
-
-    // Update is called once per frame
 
     private void FixedUpdate()
     {
         if (isPaused) return;
 
         ManageSpawning();
-    }
-
-    private void PauseBehaviours()
-    {
-        isPaused = true;
-    }
-
-    private void ResumeBehaviours()
-    {
-        isPaused = false;
     }
 
     private void ManageSpawning()

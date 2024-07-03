@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player_Interact : MonoBehaviour
+public class Player_Interact : Pauseable
 {
     [Header("Interact Properties")]
     [SerializeField] private Transform interactPoint;
@@ -23,6 +23,8 @@ public class Player_Interact : MonoBehaviour
 
     void Update()
     {
+        if (isPaused) return;
+
         if (Input.GetMouseButtonDown(0)) Interact();
 
         if (Input.GetKeyDown(KeyCode.E)) Pickup();

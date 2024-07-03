@@ -10,6 +10,8 @@ public class SO_Order : ScriptableObject
     public int mapleCount;
     public int spruceCount;
 
+    public Sprite icon;
+
     public bool CheckOrder(int birch, int maple, int spruce)
     {
         if (birch == birchCount && maple == mapleCount && spruce == spruceCount) return true;
