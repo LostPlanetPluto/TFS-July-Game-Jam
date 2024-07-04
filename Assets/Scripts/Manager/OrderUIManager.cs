@@ -13,9 +13,22 @@ public class OrderUIManager : MonoBehaviour
     [Header("UI End Positions")]
     [SerializeField] private List<Transform> uiEndPositions = new List<Transform>();
 
+    [Header("Shake Properties")]
+    [SerializeField] private float intensity;
+    [SerializeField] private float speed;
+    private bool isShake = false;
+    
+
     private void Awake()
     {
         instance = this;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isShake) return;
+
+        Shake();
     }
 
     public void SpawnOrderUI(Sprite icon)
@@ -45,6 +58,30 @@ public class OrderUIManager : MonoBehaviour
         {
             ordersUIObject[i].transform.parent = uiEndPositions[i].transform;
             ordersUIObject[i].MoveOver();
+        }
+    }
+
+    private void Shake()
+    {
+        for (int i = 0; i < uiEndPositions.Count; i++)
+        {
+            Quaternion shake = Quaternion.Euler(new Vector3(0, 0, Mathf.Sin(Time.time * speed) * intensity));
+            uiEndPositions[i].localRotation = shake;
+        }
+    }
+
+    public void StartShake()
+    {
+        isShake = true;
+    }
+
+    public void StopShake()
+    {
+        isShake = false;
+
+        for (int i = 0; i < uiEndPositions.Count; i++)
+        {
+            uiEndPositions[i].localRotation = Quaternion.Euler(Vector3.zero);
         }
     }
 }
