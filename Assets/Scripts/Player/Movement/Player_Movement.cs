@@ -7,6 +7,7 @@ public class Player_Movement : MonoBehaviour
     [Header("Movement Properties")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float turnTime;
+    [SerializeField] private float groundCheckDistance = 0.5f;
     private Rigidbody rb;
 
     private Vector3 direction;
@@ -17,19 +18,20 @@ public class Player_Movement : MonoBehaviour
     [Header("Ground Check Properties")]
     [SerializeField] private LayerMask groundCheckLayer;
 
+    //Animation Properties
+    private Animator anim;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
         direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));    
-    }
 
-    private void FixedUpdate()
-    {
         Move();
 
         GroundCheck();
@@ -39,8 +41,12 @@ public class Player_Movement : MonoBehaviour
     {
         if (rb != null)
         {
-            if (direction == Vector3.zero) return;
+            anim.SetFloat("WalkSpeed", rb.velocity.magnitude);
 
+            if (direction == Vector3.zero)
+            {
+                return;
+            }
             Vector3 camForward = Camera.main.transform.forward * Input.GetAxis("Vertical");
             camForward.y = 0;
             camForward.Normalize();
@@ -60,13 +66,13 @@ public class Player_Movement : MonoBehaviour
 
     private bool GroundCheck()
     {
-        Ray ray = new Ray(transform.position + Vector3.up + transform.forward * 1, -transform.up);
+        Ray ray = new Ray(transform.position + Vector3.up + transform.forward * groundCheckDistance, -transform.up);
         return Physics.Raycast(ray, 100, groundCheckLayer);
     }
 
     private void OnDrawGizmos()
     {
-        Ray ray = new Ray(transform.position + Vector3.up + transform.forward * 1, -transform.up);
+        Ray ray = new Ray(transform.position + Vector3.up + transform.forward * groundCheckDistance, -transform.up);
 
         Gizmos.DrawRay(ray);
     }
