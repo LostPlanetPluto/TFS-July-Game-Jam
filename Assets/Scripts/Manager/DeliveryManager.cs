@@ -15,6 +15,9 @@ public class DeliveryManager : Pauseable
     [SerializeField] private int maxOrder;
     private float spawnTimer = 0;
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip orderFilledClip;
+    [SerializeField] private AudioClip orderUnfilledClip;
     private void Awake()
     {
         instance = this;
@@ -80,7 +83,7 @@ public class DeliveryManager : Pauseable
                 }
 
                 if (GameManager.instance != null) GameManager.instance.AddPoint();
-
+                if (AudioManager.instance != null) AudioManager.instance.PlaySFX(orderFilledClip);
                 break;
             }
         }
@@ -91,6 +94,10 @@ public class DeliveryManager : Pauseable
             return true;
         }
 
-        else return false;
+        else
+        {
+            if (AudioManager.instance != null) AudioManager.instance.PlaySFX(orderUnfilledClip);
+            return false;
+        }
     }
 }
