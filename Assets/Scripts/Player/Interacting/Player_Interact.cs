@@ -8,6 +8,7 @@ public class Player_Interact : Pauseable
     [Header("Interact Properties")]
     [SerializeField] private Transform interactPoint;
     [SerializeField] private float radius;
+    [SerializeField] private LayerMask objectLayers;
 
     [Header("Pickup Properties")]
     [SerializeField] private int inventorySize;
@@ -34,7 +35,7 @@ public class Player_Interact : Pauseable
 
     public void Interact()
     {
-        Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius);
+        Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius, objectLayers);
 
         // Return if no objects are found
         if (objects.Length == 0) return;
@@ -106,7 +107,7 @@ public class Player_Interact : Pauseable
     {
         if (woodStacks[inventorySize - 1] != null) return;
 
-        Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius);
+        Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius, objectLayers);
 
         if (objects.Length == 0) return;
 
@@ -144,6 +145,8 @@ public class Player_Interact : Pauseable
 
 
         #region <----  Loose Wood ---->
+
+        Debug.Log(objects[0].name);
 
         Wood wood = objects[0].GetComponentInParent<Wood>();
 

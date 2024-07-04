@@ -6,7 +6,7 @@ public class Wood : MonoBehaviour
 {
     [Header("Spawn Wood Properties")]
     [SerializeField] private bool isPickedUp = false;
-    private Renderer meshRenderer;
+    [SerializeField] private MeshRenderer[] meshRenderer;
     [SerializeField] private float lifeTime;
     private float lifeTimer = 0;
 
@@ -25,7 +25,6 @@ public class Wood : MonoBehaviour
 
     private void Awake()
     {
-        meshRenderer = GetComponentInChildren<Renderer>();
         blinkRatio = lifeTime / 4 * blinkRatio;
         invisRatio = blinkRatio * invisRatio;
     
@@ -47,7 +46,10 @@ public class Wood : MonoBehaviour
     public void PickedUp()
     {
         isPickedUp = true;
-        meshRenderer.enabled = true;
+        for (int i = 0; i < meshRenderer.Length; i++)
+        {
+            meshRenderer[i].enabled = true;
+        }
 
         // Disable Rigidbody and collider;
         rb.isKinematic = true;
@@ -68,11 +70,20 @@ public class Wood : MonoBehaviour
     private void ManageBlink()
     {
         blinkTimer += Time.deltaTime;
-        if (blinkTimer > (blinkRatio - invisRatio)) meshRenderer.enabled = false;
+        if (blinkTimer > (blinkRatio - invisRatio))
+        {
+            for (int i = 0; i < meshRenderer.Length; i++)
+            {
+                meshRenderer[i].enabled = false;
+            }
+        }
 
         if (blinkTimer > blinkRatio)
         {
-            meshRenderer.enabled = true;
+            for (int i = 0; i < meshRenderer.Length; i++)
+            {
+                meshRenderer[i].enabled = true;
+            }
             blinkTimer = 0;
         }
     }

@@ -13,9 +13,13 @@ public class GameManager : MonoBehaviour
     public event Action onResume;
     private bool isPaused = false;
 
+    // Point Properties
+    public event Action onAddPoint;
+    private int points = 0;
+
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -50,5 +54,16 @@ public class GameManager : MonoBehaviour
     private void ResumeBehaviours()
     {
         isPaused = false;
+    }
+
+    public void AddPoint()
+    {
+        points++;
+        onAddPoint?.Invoke();
+    }
+
+    public int GetPoints()
+    {
+        return points;
     }
 }

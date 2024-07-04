@@ -25,15 +25,14 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        
-        Move();
-
-        GroundCheck();
+        direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));    
     }
 
     private void FixedUpdate()
     {
+        Move();
+
+        GroundCheck();
     }
 
     private void Move()

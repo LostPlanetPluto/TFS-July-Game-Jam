@@ -68,6 +68,8 @@ public class DeliveryManager : Pauseable
 
                 if (OrderUIManager.instance != null) OrderUIManager.instance.RemoveOrder(orders.IndexOf(order));
 
+                if (GameManager.instance != null) GameManager.instance.AddPoint();
+
                 break;
             }
         }

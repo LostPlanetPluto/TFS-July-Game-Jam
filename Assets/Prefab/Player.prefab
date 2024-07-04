@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactPoint: {fileID: 4435265521930329754}
-  radius: 0.5
+  radius: 1.5
   inventorySize: 0
   pickUpPoints:
   - {fileID: 2352504746060550054}
