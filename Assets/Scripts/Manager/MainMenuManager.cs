@@ -13,23 +13,36 @@ public class MainMenuManager : MonoBehaviour
     [Header("Animator Properties")] 
     [SerializeField] private Animator anim;
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip mainTheme;
+    [SerializeField] private AudioClip playSound;
+    [SerializeField] private AudioClip selectSound;
+
     public void GoToGameScene()
     {
+        MenuSounds(playSound);
         fader.FadeToNextScene("Game Scene");
     }
 
     public void DisplaySettings()
     {
+        MenuSounds(selectSound);
         anim.Play("Go To Settings");
     }
 
     public void SettingsToMain()
     {
+        MenuSounds(selectSound);
         anim.Play("Settings To Main");
     }
 
     public void Quit()
     {
         Application.Quit();
+    }
+
+    private void MenuSounds(AudioClip clip)
+    {
+        if (AudioManager.instance != null) AudioManager.instance.PlaySFX(clip);
     }
 }

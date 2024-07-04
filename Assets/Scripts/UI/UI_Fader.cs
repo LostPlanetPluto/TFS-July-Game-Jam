@@ -9,6 +9,7 @@ public class UI_Fader : MonoBehaviour
     public void ChangeScene()
     {
         if (sceneName == null) Debug.Log("No name was given");
+        if (AudioManager.instance != null) AudioManager.instance.StopSounds();
         SceneManager.LoadScene(sceneName);
     }
 

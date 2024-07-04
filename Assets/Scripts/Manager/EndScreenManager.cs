@@ -11,6 +11,10 @@ public class EndScreenManager : MonoBehaviour
     [Header("Points Properties")]
     [SerializeField] private TextMeshProUGUI pointsText;
 
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip playSound;
+    [SerializeField] private AudioClip selectSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +27,7 @@ public class EndScreenManager : MonoBehaviour
     public void GoToPlayAgain()
     {
         if (GameManager.instance != null) Destroy(GameManager.instance);
+        if (AudioManager.instance != null) AudioManager.instance.PlaySFX(playSound);
 
         fader.FadeToNextScene("Game Scene");
     }
@@ -30,6 +35,7 @@ public class EndScreenManager : MonoBehaviour
     public void GoToMainMenu()
     {
         if (GameManager.instance != null) Destroy(GameManager.instance);
+        if (AudioManager.instance != null) AudioManager.instance.PlaySFX(selectSound);
 
         fader.FadeToNextScene("Main Menu");
     }
