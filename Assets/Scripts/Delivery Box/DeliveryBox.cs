@@ -7,6 +7,11 @@ public class DeliveryBox : MonoBehaviour
     [SerializeField] private Transform[] itemPoints = new Transform[3];
     [SerializeField] private Wood[] itemsHeld = new Wood[3];
 
+    [Header("Drop Properties")]
+    [SerializeField] private float dropHeight;
+    [SerializeField] private float dropForce;
+    [SerializeField] private float dropRadius;
+
     public bool CheckAvailableSpace()
     {
         if (itemsHeld[itemsHeld.Length - 1] != null) return false;
@@ -77,10 +82,26 @@ public class DeliveryBox : MonoBehaviour
     {
         for (int i = 0; i < itemsHeld.Length; i++)
         {
+            itemsHeld[i].transform.position += Vector3.up * dropHeight;
             itemsHeld[i].transform.parent = null;
             itemsHeld[i].Dropped();
 
             itemsHeld[i] = null;
         }
+
+        Collider[] wood = Physics.OverlapSphere(transform.position + Vector3.up * dropHeight, dropRadius);
+
+        if (wood.Length == 0) return;
+
+        foreach (Collider collider in wood)
+        {
+            Rigidbody rb = collider.GetComponentInParent<Rigidbody>();
+            rb.AddExplosionForce(dropForce, transform.position + Vector3.up * dropHeight, dropRadius);        
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + Vector3.up * dropHeight, dropRadius);
     }
 }

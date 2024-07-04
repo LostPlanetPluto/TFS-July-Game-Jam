@@ -44,5 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce31197f30466f488802472222588fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orders:
+  orderTypes:
   - {fileID: 11400000, guid: ef0aef91191d4894c92f72f4200a312e, type: 2}
+  - {fileID: 11400000, guid: f1c9c9662fb394a42812b2bab36cedb2, type: 2}
+  - {fileID: 11400000, guid: ff3e6991ef4b7f94c94b091b11354954, type: 2}
+  orders: 
+  spawnTime: 5
+  maxOrder: 2
+  orderFilledClip: {fileID: 8300000, guid: e0b5a17e58b1817439503b3439a4b735, type: 3}
+  orderUnfilledClip: {fileID: 8300000, guid: d841ddb607e1ae04d987483b541c60cc, type: 3}

@@ -43,8 +43,12 @@ public class Player_Interact : Pauseable
                 anim.Play("Chop");
             }
 
-            if (objects[0].GetComponentInParent<LogHolder>() != null || objects[0].GetComponentInParent<DeliveryBox>() != null)
+            LogHolder holder = objects[0].GetComponentInParent<LogHolder>();
+
+            if (holder != null || objects[0].GetComponentInParent<DeliveryBox>() != null)
             {
+                if (holder != null && holder.GetWoodType() != woodTypeStacked) return;
+
                 canAct = false;
                 anim.Play("Place");
             }
@@ -91,6 +95,8 @@ public class Player_Interact : Pauseable
         Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius, objectLayers);
 
         #region <---- Log Holder ---->
+
+        if (objects.Length == 0) return;
 
         LogHolder logHolder = objects[0].GetComponentInParent<LogHolder>();
 
@@ -184,7 +190,13 @@ public class Player_Interact : Pauseable
 
         #region <----  Loose Wood ---->
 
-        Wood wood = objects[0].GetComponentInParent<Wood>();
+        Wood wood = null;
+
+        for (int i = 0; i < objects.Length; i++)
+        { 
+            wood = objects[i].GetComponentInParent<Wood>();
+            if (wood != null) break;
+        }
 
         if (wood == null) return;
 
@@ -219,5 +231,10 @@ public class Player_Interact : Pauseable
         }
 
         woodTypeStacked = Wood.WoodType.None;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(interactPoint.position, radius);
     }
 }
