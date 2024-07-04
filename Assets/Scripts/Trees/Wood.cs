@@ -21,7 +21,7 @@ public class Wood : MonoBehaviour
 
 
     private Rigidbody rb;
-    private Collider col;
+    public Collider[] col;
 
     private void Awake()
     {
@@ -29,7 +29,6 @@ public class Wood : MonoBehaviour
         invisRatio = blinkRatio * invisRatio;
     
         rb = GetComponent<Rigidbody>();
-        col = GetComponentInChildren<Collider>();
     }
 
     private void Update()
@@ -53,7 +52,7 @@ public class Wood : MonoBehaviour
 
         // Disable Rigidbody and collider;
         rb.isKinematic = true;
-        col.enabled = false;
+        foreach (Collider coll in col) coll.enabled = false;
     }
 
     public void Dropped()
@@ -64,7 +63,7 @@ public class Wood : MonoBehaviour
 
         // Re enable Rigidbody and collider
         rb.isKinematic = false;
-        col.enabled = true;
+        foreach (Collider coll in col) coll.enabled = true;
     }
 
     private void ManageBlink()

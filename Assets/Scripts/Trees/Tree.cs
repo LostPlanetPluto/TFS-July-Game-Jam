@@ -74,7 +74,7 @@ public class Tree : Pauseable, I_HealthComponent
         if (Random.value < 0.5f) zPosition = -zPosition;
 
         // Checck if tree will spawn above ground        
-        Ray ray = new Ray(transform.position + new Vector3(xPosition, 1, zPosition), -Vector3.up);
+        Ray ray = new Ray(transform.position + new Vector3(xPosition, 5, zPosition), -Vector3.up);
         Physics.Raycast(ray, out RaycastHit raycastHit, 100, groundLayer);
 
         // if above valid target, return position, else get a new position
