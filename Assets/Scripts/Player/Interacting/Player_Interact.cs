@@ -17,30 +17,64 @@ public class Player_Interact : Pauseable
 
     private Wood.WoodType woodTypeStacked = Wood.WoodType.None;
 
+    private Animator anim;
+
+    private bool canAct = true;
+
     private void Awake()
     {
         inventorySize = pickUpPoints.Length;
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (isPaused) return;
+        if (isPaused || !canAct) return;
 
-        if (Input.GetMouseButtonDown(0)) Interact();
+        if (Input.GetMouseButtonDown(0))
+        {
+            Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius, objectLayers);
 
-        if (Input.GetKeyDown(KeyCode.E)) Pickup();
+            if (objects.Length == 0) return;
 
-        if (Input.GetKeyDown(KeyCode.R)) Drop();
+            if (objects[0].GetComponentInParent<I_HealthComponent>() != null)
+            {
+                canAct = false;
+                anim.Play("Chop");
+            }
+
+            if (objects[0].GetComponentInParent<LogHolder>() != null || objects[0].GetComponentInParent<DeliveryBox>() != null)
+            {
+                canAct = false;
+                anim.Play("Place");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            canAct = false;
+            anim.Play("PickUp");
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            canAct = false;
+            anim.Play("Drop");
+        }
     }
 
-    public void Interact()
+    public void InteractEnded()
+    {
+        canAct = true;
+    }
+
+    public void Chop()
     {
         Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius, objectLayers);
 
         // Return if no objects are found
         if (objects.Length == 0) return;
-
-        #region <---- Interact Tree ---->    
+   
         // Check to see if objects can be damaged
         I_HealthComponent healthComp = objects[0].GetComponentInParent<I_HealthComponent>();
 
@@ -50,7 +84,11 @@ public class Player_Interact : Pauseable
             return;
         }
 
-        #endregion
+    }
+
+    public void Place()
+    {
+        Collider[] objects = Physics.OverlapSphere(interactPoint.position, radius, objectLayers);
 
         #region <---- Log Holder ---->
 
@@ -146,8 +184,6 @@ public class Player_Interact : Pauseable
 
         #region <----  Loose Wood ---->
 
-        Debug.Log(objects[0].name);
-
         Wood wood = objects[0].GetComponentInParent<Wood>();
 
         if (wood == null) return;
@@ -171,7 +207,7 @@ public class Player_Interact : Pauseable
         #endregion
     }
 
-    private void Drop()
+    public void Drop()
     {
         for (int i = 0; i < inventorySize; i++) 
         {
