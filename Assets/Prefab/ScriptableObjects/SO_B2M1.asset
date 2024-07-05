@@ -15,4 +15,4 @@ MonoBehaviour:
   birchCount: 2
   mapleCount: 1
   spruceCount: 0
-  icon: {fileID: 21300000, guid: f612cc23eed336f478edaee4b44f0df8, type: 3}
+  icon: {fileID: 21300000, guid: 4cf72a99a491c284a8d19eb7e7cc9a72, type: 3}
