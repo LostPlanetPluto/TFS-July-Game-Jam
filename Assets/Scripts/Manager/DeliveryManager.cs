@@ -63,7 +63,7 @@ public class DeliveryManager : Pauseable
             orderCount++;
 
             // GAME OVER LOGIC HERE
-            if (orderCount > maxOrder) FindAnyObjectByType<UI_Fader>().FadeToNextScene("Temp End Screen");
+            if (orderCount > maxOrder) FindAnyObjectByType<UI_Fader>().FadeToNextScene("End Scene");
                 
                 
 

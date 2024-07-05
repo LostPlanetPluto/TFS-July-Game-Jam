@@ -29,7 +29,7 @@ public class EndScreenManager : MonoBehaviour
         if (GameManager.instance != null) Destroy(GameManager.instance);
         if (AudioManager.instance != null) AudioManager.instance.PlaySFX(playSound);
 
-        fader.FadeToNextScene("Game Scene");
+        fader.FadeToNextScene("Game Scene V2");
     }
 
     public void GoToMainMenu()
@@ -37,6 +37,7 @@ public class EndScreenManager : MonoBehaviour
         if (GameManager.instance != null) Destroy(GameManager.instance);
         if (AudioManager.instance != null) AudioManager.instance.PlaySFX(selectSound);
 
-        fader.FadeToNextScene("Main Menu");
+        fader.FadeToNextScene("Main Menu V2" +
+            "");
     }
 }

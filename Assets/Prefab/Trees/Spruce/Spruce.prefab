@@ -164,7 +164,7 @@ MonoBehaviour:
   youngHealth: 1
   grownHealth: 3
   ownType: {fileID: 7534551122414406557}
-  spawnTime: 9
+  spawnTime: 25
   maxSpawnRange: 4
   minSpawnRange: 1
   groundLayer:
@@ -176,8 +176,8 @@ MonoBehaviour:
   woodStack: {fileID: 4121788251225533926, guid: c01cd74819537de4ab073ec42c55d7b6, type: 3}
   youngSpawnCount: 1
   grownSpawnCount: 4
-  spawnVelocity: 3.5
-  timeToGrow: 20
+  spawnVelocity: 2
+  timeToGrow: 10
   growTimer: 0
 --- !u!95 &2610825082946400518
 Animator:
