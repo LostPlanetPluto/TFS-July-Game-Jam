@@ -21,7 +21,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToGameScene()
     {
         MenuSounds(playSound);
-        fader.FadeToNextScene("Game Scene V2");
+        fader.FadeToNextScene("Tutorial Scene");
     }
 
     public void DisplaySettings()
