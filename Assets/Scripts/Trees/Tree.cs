@@ -6,10 +6,12 @@ using UnityEngine;
 public class Tree : Pauseable, I_HealthComponent
 {
     [Header("Health Properties")]
-    [SerializeField] private float maxHealth;
+    [SerializeField] private float youngHealth;
+    [SerializeField] private float grownHealth;
     public float health { get; set; }
 
     [Header("Spawn Properties")]
+    [SerializeField] private Tree ownType;
     [SerializeField] private float spawnTime;
     [SerializeField] private float maxSpawnRange;
     [SerializeField] private float minSpawnRange;
@@ -19,18 +21,27 @@ public class Tree : Pauseable, I_HealthComponent
 
     [Header("Spawn Wood Properties")]
     [SerializeField] private GameObject woodStack;
-    [SerializeField] private int spawnCount;
+    [SerializeField] private int youngSpawnCount;
+    [SerializeField] private int grownSpawnCount;
     [SerializeField] private float spawnVelocity;
 
     // spawn location checks;
     private int spawnCheckCount = 3;
+
+    [Header("Grow Properties")]
+    [SerializeField] private float timeToGrow =  7f;
+    private Animator anim;
+    public float growTimer = 0;
+    private bool isGrown = false;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-        health = maxHealth;
+        health = youngHealth;
+        anim = GetComponent<Animator>();
+        growTimer = 0;
     }
 
     private void FixedUpdate()
@@ -38,6 +49,17 @@ public class Tree : Pauseable, I_HealthComponent
         if (isPaused) return;
 
         ManageSpawning();
+
+        if (isGrown) return;
+
+        if (growTimer <= timeToGrow) growTimer += Time.deltaTime;
+
+        else
+        {
+            health = grownHealth;
+            isGrown = true;
+            anim.Play("Grow");
+        }
     }
 
     private void ManageSpawning()
@@ -56,7 +78,7 @@ public class Tree : Pauseable, I_HealthComponent
 
                 if (trees.Length == 0)
                 {
-                    Instantiate(gameObject, spawnLocation, transform.rotation);
+                    Instantiate(ownType, spawnLocation, transform.rotation);
                     break;
                 }
             }
@@ -87,14 +109,19 @@ public class Tree : Pauseable, I_HealthComponent
     {
         health -= damage;
 
-        SpawnWood();
 
-        if (health < 0) Destroy(gameObject);
+        if (health <= 0)
+        {
+            SpawnWood();
+            Destroy(gameObject);
+        }
     }
 
     private void SpawnWood()
     {
         if (woodStack == null) return;
+
+        int spawnCount = growTimer <= timeToGrow ? youngSpawnCount : grownSpawnCount;
 
         for (int i = 0; i < spawnCount; i++)
         {

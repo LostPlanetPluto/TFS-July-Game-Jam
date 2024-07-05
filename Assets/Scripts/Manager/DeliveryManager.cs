@@ -8,7 +8,8 @@ public class DeliveryManager : Pauseable
 
     [Header("Order Properties")]
     public List<SO_Order> orderTypes = new List<SO_Order>();
-    public List<int> orders = new List<int>();
+    public int[] orders;
+    private int orderCount = 0;
 
     [Header("Order Spawning Properties")]
     [SerializeField] private float spawnTime = 10f;
@@ -21,6 +22,8 @@ public class DeliveryManager : Pauseable
     private void Awake()
     {
         instance = this;
+        orders = new int[maxOrder];
+        for (int i = 0; i < maxOrder; i++) orders[i] = -1;
     }
 
     private void Update()
@@ -34,15 +37,25 @@ public class DeliveryManager : Pauseable
     {
         spawnTimer += Time.deltaTime;
 
-        if (spawnTimer > spawnTime && orders.Count <= maxOrder)
+        if (spawnTimer > spawnTime)
         {
             int randomIndex = Random.Range(0, orderTypes.Count);
 
-            orders.Add(randomIndex);
+            for (int i = 0; i < orders.Length; i++)
+            {
+                orderCount++;
 
+                if (orders[i] == -1)
+                {
+                    orders[i] = randomIndex;
+                    break;
+                }
+            }
+
+            orderCount++;
 
                 // GAME OVER LOGIC HERE
-            if (orders.Count > maxOrder) FindAnyObjectByType<UI_Fader>().FadeToNextScene("Temp End Screen");
+            if (orderCount > maxOrder) FindAnyObjectByType<UI_Fader>().FadeToNextScene("Temp End Screen");
                 
                 
                 
@@ -52,32 +65,29 @@ public class DeliveryManager : Pauseable
                 // Always spawn UI
                 OrderUIManager.instance.SpawnOrderUI(orderTypes[randomIndex].icon);
 
-                if (orders.Count == maxOrder) OrderUIManager.instance.StartShake();
+                if (orderCount == maxOrder) OrderUIManager.instance.StartShake();
             }
 
+            orderCount = 0;
             spawnTimer = 0;
         }
     }
 
     public bool CheckOrders(int birch, int maple, int spruce)
     {
-        if (orders.Count == 0)
-        {
-            Debug.Log("There are no orders");
-            return false;
-        }
-
         int orderToRemove = -1;
 
-        foreach (int order in orders)
+        for (int i = 0; i < orders.Length; i++)
         {
-            if (orderTypes[order].CheckOrder(birch, maple, spruce))
+            if (orders[i] == -1) continue;
+
+            if (orderTypes[orders[i]].CheckOrder(birch, maple, spruce))
             {
-                orderToRemove = order;
+                orderToRemove = i;
 
                 if (OrderUIManager.instance != null)
                 {
-                    OrderUIManager.instance.RemoveOrder(orders.IndexOf(order));
+                    OrderUIManager.instance.RemoveOrder(i);
 
                     OrderUIManager.instance.StopShake();
                 }
@@ -90,7 +100,7 @@ public class DeliveryManager : Pauseable
 
         if (orderToRemove != -1)
         {
-            orders.Remove(orderToRemove);
+            orders[orderToRemove] = -1;
             return true;
         }
 

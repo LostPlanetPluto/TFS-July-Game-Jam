@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player_Interact : Pauseable
 {
+    [Header("Damage Properties")]
+    [SerializeField] private float damage = 1;
+
     [Header("Interact Properties")]
     [SerializeField] private Transform interactPoint;
     [SerializeField] private float radius;
@@ -14,6 +17,10 @@ public class Player_Interact : Pauseable
     [SerializeField] private int inventorySize;
     [SerializeField] private Transform[] pickUpPoints = new Transform[3];
     [SerializeField] private Wood[] woodStacks = new Wood[3];
+
+    [Header("Audio Clips")]
+    [SerializeField] private AudioClip chopClip;
+    [SerializeField] private AudioClip placeClip;
 
     private Wood.WoodType woodTypeStacked = Wood.WoodType.None;
 
@@ -42,6 +49,10 @@ public class Player_Interact : Pauseable
                 canAct = false;
                 anim.Play("Chop");
             }
+
+
+            // Place objects in Delivery box or Log holder if holding objects
+            if (woodStacks.Length == 0) return;
 
             LogHolder holder = objects[0].GetComponentInParent<LogHolder>();
 
@@ -84,10 +95,21 @@ public class Player_Interact : Pauseable
 
         if (healthComp != null)
         {
-            healthComp.OnTakeDamage(10);
+
+            healthComp.OnTakeDamage(damage);
             return;
         }
 
+    }
+
+    public void PlayChopSound()
+    {
+         if (AudioManager.instance != null) AudioManager.instance.PlaySFX(chopClip);
+    }
+
+    public void PlayPlaceSound()
+    {
+        if (AudioManager.instance != null) AudioManager.instance.PlaySFX(placeClip);
     }
 
     public void Place()

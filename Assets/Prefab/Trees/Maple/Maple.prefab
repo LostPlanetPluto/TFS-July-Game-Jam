@@ -136,7 +136,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.83
+  m_Radius: 0.3
   m_Height: 3.45
   m_Direction: 1
   m_Center: {x: 0, y: 1.7, z: 0}
@@ -150,6 +150,7 @@ GameObject:
   m_Component:
   - component: {fileID: 397832337286538549}
   - component: {fileID: 7240929680316118649}
+  - component: {fileID: 4799869458435665374}
   m_Layer: 8
   m_Name: Maple
   m_TagString: Untagged
@@ -185,7 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb4bd33653d1ea4b9f02c14dc854393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  youngHealth: 0
+  grownHealth: 0
+  ownType: {fileID: 7240929680316118649}
   spawnTime: 5
   maxSpawnRange: 4
   minSpawnRange: 1
@@ -196,8 +199,32 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   woodStack: {fileID: 4927122415603034462, guid: 300542bfc5451a242b6f3d1198d84733, type: 3}
-  spawnCount: 3
+  youngSpawnCount: 1
+  grownSpawnCount: 3
   spawnVelocity: 3.5
+  timeToGrow: 7
+  growTimer: 0
+--- !u!95 &4799869458435665374
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4435522111933983828}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f379b422db12c74089e14d1986c2414, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5782811504592540815
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &57561249775069139
 Transform:
   m_ObjectHideFlags: 0

@@ -508,6 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8204549429559985108}
   - component: {fileID: 7280209503661620849}
+  - component: {fileID: -1840507632324453336}
   m_Layer: 8
   m_Name: Birch
   m_TagString: Untagged
@@ -543,7 +544,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb4bd33653d1ea4b9f02c14dc854393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  youngHealth: 0
+  grownHealth: 0
+  ownType: {fileID: 7280209503661620849}
   spawnTime: 3
   maxSpawnRange: 6
   minSpawnRange: 3
@@ -554,8 +557,32 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   woodStack: {fileID: 604608871286186212, guid: bbee3ba56677ce5479d31b84581b3f3d, type: 3}
-  spawnCount: 3
+  youngSpawnCount: 1
+  grownSpawnCount: 3
   spawnVelocity: 3.5
+  timeToGrow: 7
+  growTimer: 0
+--- !u!95 &-1840507632324453336
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4186289614415077077}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f379b422db12c74089e14d1986c2414, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4210148354272252578
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,7 +1040,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.21
   m_Height: 3.68
   m_Direction: 1
   m_Center: {x: 0, y: 1.8, z: 0}

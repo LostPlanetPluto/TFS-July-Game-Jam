@@ -96,7 +96,7 @@ public class DeliveryBox : MonoBehaviour
         foreach (Collider collider in wood)
         {
             Rigidbody rb = collider.GetComponentInParent<Rigidbody>();
-            rb.AddExplosionForce(dropForce, transform.position + Vector3.up * dropHeight, dropRadius);        
+            if (rb != null) rb.AddExplosionForce(dropForce, transform.position + Vector3.up * dropHeight, dropRadius);        
         }
     }
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Order : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class UI_Order : MonoBehaviour
     private float moveTimer = 0;
 
     [Header("Icon Properties")]
-    [SerializeField] private SpriteRenderer iconSR;
+    public Image iconImage;
 
     private void Awake()
     {
@@ -26,11 +26,19 @@ public class UI_Order : MonoBehaviour
     {
         if (!movingOver) return;
 
+        Debug.Log(transform.localPosition.x);
+
         moveTimer += Time.deltaTime;
 
         float curveTest = curve.Evaluate( moveTimer / duration );
 
-        transform.localPosition = Vector3.Lerp(new Vector3(startingXPosition, 0, 0), Vector3.zero, curveTest);
+        float xPosition = Mathf.Lerp(startingXPosition, 0, curveTest);
+
+        Debug.Log(xPosition);
+
+        Vector3 newPos = new Vector3(xPosition, 0, -11);
+
+        transform.localPosition = newPos;
 
         if (moveTimer > duration) movingOver = false;
     }
@@ -52,14 +60,15 @@ public class UI_Order : MonoBehaviour
 
     IEnumerator MoveOverHelper()
     {
+        startingXPosition = transform.position.x;
+
         yield return 0;
 
         movingOver = true;
-        startingXPosition = transform.localPosition.x;
     }
 
     public void SetIcon(Sprite icon)
     {
-        iconSR.sprite = icon;
+        iconImage.sprite = icon;
     }
 }

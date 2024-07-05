@@ -10,11 +10,11 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private int sfxCount;
-    private Queue<AudioSource> sfxPool;
+    public Queue<AudioSource> sfxPool;
 
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private int musicCount;
-    private Queue<AudioSource> musicPool;
+    public Queue<AudioSource> musicPool;
 
     [SerializeField] private AudioMixer mixer;
 
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
 
         for (int i = 0; i < musicCount; i++)
         {
-            sfxPool.Enqueue(Instantiate(musicSource, transform));
+            musicPool.Enqueue(Instantiate(musicSource, transform));
         }
     }
 
@@ -86,6 +86,7 @@ public class AudioManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("Master", volume);
         mixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+        Debug.Log(PlayerPrefs.GetFloat("Master"));
     }
 
     public void StopSounds()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UI_PointsCounter : MonoBehaviour
 {
-    [SerializeField] private TextMeshPro pointsText;
+    [SerializeField] private TextMeshProUGUI pointsText;
 
     // Start is called before the first frame update
     void Start()
