@@ -115,6 +115,11 @@ public class Tree : Pauseable, I_HealthComponent
             SpawnWood();
             Destroy(gameObject);
         }
+
+        else
+        {
+            anim.Play("Hit");
+        }
     }
 
     private void SpawnWood()

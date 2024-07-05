@@ -203,7 +203,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   dropHeight: 0.5
-  dropForce: 10
+  dropForce: 100
   dropRadius: 0.25
 --- !u!1 &7392233520266194536
 GameObject:

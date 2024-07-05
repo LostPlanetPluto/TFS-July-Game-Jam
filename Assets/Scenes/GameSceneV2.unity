@@ -6843,12 +6843,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7534551122414406557, guid: 420ffe209b7822244ba584896a364d61, type: 3}
-      propertyPath: grownHealth
-      value: 3
+      propertyPath: spawnTime
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7534551122414406557, guid: 420ffe209b7822244ba584896a364d61, type: 3}
-      propertyPath: youngHealth
-      value: 1
+      propertyPath: timeToGrow
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7534551122414406557, guid: 420ffe209b7822244ba584896a364d61, type: 3}
+      propertyPath: spawnVelocity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7807,6 +7811,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeliveryBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5955117702327548683, guid: b04dee6b1787d464f951c31f94994a7d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9383315
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955117702327548683, guid: b04dee6b1787d464f951c31f94994a7d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000008940696
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955117702327548683, guid: b04dee6b1787d464f951c31f94994a7d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000008940696
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955117702327548683, guid: b04dee6b1787d464f951c31f94994a7d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.3457368
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955117702327548683, guid: b04dee6b1787d464f951c31f94994a7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -40.454
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8291,12 +8315,16 @@ PrefabInstance:
       value: Birch
       objectReference: {fileID: 0}
     - target: {fileID: 7280209503661620849, guid: 835f3acaec4c1a74c9c13be6bf59e585, type: 3}
-      propertyPath: grownHealth
-      value: 3
+      propertyPath: spawnTime
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7280209503661620849, guid: 835f3acaec4c1a74c9c13be6bf59e585, type: 3}
-      propertyPath: youngHealth
-      value: 1
+      propertyPath: timeToGrow
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7280209503661620849, guid: 835f3acaec4c1a74c9c13be6bf59e585, type: 3}
+      propertyPath: spawnVelocity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8204549429559985108, guid: 835f3acaec4c1a74c9c13be6bf59e585, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15768,26 +15796,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5917522301115306608, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: moveSpeed
-      value: 700
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165442437883366564, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: m_Drag
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165442437883366564, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: m_Mass
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165442437883366564, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: m_AngularDrag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165442437883366564, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8275901650978951154, guid: 6a961818671131f4d809026346a3f94e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.43
@@ -15829,17 +15837,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8856394006868921752, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: chopClip
+      propertyPath: dropClip
       value: 
-      objectReference: {fileID: 8300000, guid: 3f35bd944dcf906409e4c869f2f6abaa, type: 3}
+      objectReference: {fileID: 8300000, guid: 3afcdb40e0b41cb4b8dc1c746ac2e4aa, type: 3}
     - target: {fileID: 8856394006868921752, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: placeClip
+      propertyPath: pickupClip
       value: 
-      objectReference: {fileID: 8300000, guid: c91461be2aed1ef429f3bc69118e41fc, type: 3}
-    - target: {fileID: 8856394006868921752, guid: 6a961818671131f4d809026346a3f94e, type: 3}
-      propertyPath: objectLayers.m_Bits
-      value: 768
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: a2153c1307356d04790f467411e44b4a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24917,12 +24921,16 @@ PrefabInstance:
       value: Maple
       objectReference: {fileID: 0}
     - target: {fileID: 7240929680316118649, guid: f7f8cbdc555d9f4418d46c711803017a, type: 3}
-      propertyPath: grownHealth
-      value: 3
+      propertyPath: spawnTime
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7240929680316118649, guid: f7f8cbdc555d9f4418d46c711803017a, type: 3}
-      propertyPath: youngHealth
-      value: 1
+      propertyPath: timeToGrow
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7240929680316118649, guid: f7f8cbdc555d9f4418d46c711803017a, type: 3}
+      propertyPath: spawnVelocity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -44430,7 +44438,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5171709616894753703, guid: 249c99b9aa4e49841ad58f27e7d4e47c, type: 3}
       propertyPath: maxOrder
-      value: 10
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5171709616894753703, guid: 249c99b9aa4e49841ad58f27e7d4e47c, type: 3}
+      propertyPath: spawnTime
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5901335196897091408, guid: 249c99b9aa4e49841ad58f27e7d4e47c, type: 3}
       propertyPath: m_LocalPosition.x

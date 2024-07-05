@@ -21,6 +21,8 @@ public class Player_Interact : Pauseable
     [Header("Audio Clips")]
     [SerializeField] private AudioClip chopClip;
     [SerializeField] private AudioClip placeClip;
+    [SerializeField] private AudioClip pickupClip;
+    [SerializeField] private AudioClip dropClip;
 
     private Wood.WoodType woodTypeStacked = Wood.WoodType.None;
 
@@ -110,6 +112,16 @@ public class Player_Interact : Pauseable
     public void PlayPlaceSound()
     {
         if (AudioManager.instance != null) AudioManager.instance.PlaySFX(placeClip);
+    }
+
+    public void PlayPickUpSound()
+    {
+        if (AudioManager.instance != null) AudioManager.instance.PlaySFX(pickupClip);
+    }
+
+    public void PlayDropSound()
+    {
+        if (AudioManager.instance != null) AudioManager.instance.PlaySFX(dropClip);
     }
 
     public void Place()

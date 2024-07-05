@@ -28,6 +28,12 @@ public class DeliveryManager : Pauseable
 
     private void Update()
     {
+        if (OrderUIManager.instance != null)
+        {
+            if (orderCount == maxOrder) OrderUIManager.instance.StartShake();
+            else OrderUIManager.instance.StopShake();
+        }
+
         if (isPaused) return;
 
         SpawnBehaviour();
@@ -39,6 +45,8 @@ public class DeliveryManager : Pauseable
 
         if (spawnTimer > spawnTime)
         {
+            orderCount = 0;
+            
             int randomIndex = Random.Range(0, orderTypes.Count);
 
             for (int i = 0; i < orders.Length; i++)
@@ -54,21 +62,18 @@ public class DeliveryManager : Pauseable
 
             orderCount++;
 
-                // GAME OVER LOGIC HERE
+            // GAME OVER LOGIC HERE
             if (orderCount > maxOrder) FindAnyObjectByType<UI_Fader>().FadeToNextScene("Temp End Screen");
                 
                 
-                
-                
+
             if (OrderUIManager.instance != null)
             {
                 // Always spawn UI
                 OrderUIManager.instance.SpawnOrderUI(orderTypes[randomIndex].icon);
 
-                if (orderCount == maxOrder) OrderUIManager.instance.StartShake();
             }
 
-            orderCount = 0;
             spawnTimer = 0;
         }
     }
@@ -88,8 +93,6 @@ public class DeliveryManager : Pauseable
                 if (OrderUIManager.instance != null)
                 {
                     OrderUIManager.instance.RemoveOrder(i);
-
-                    OrderUIManager.instance.StopShake();
                 }
 
                 if (GameManager.instance != null) GameManager.instance.AddPoint();
@@ -101,6 +104,7 @@ public class DeliveryManager : Pauseable
         if (orderToRemove != -1)
         {
             orders[orderToRemove] = -1;
+            orderCount--;
             return true;
         }
 

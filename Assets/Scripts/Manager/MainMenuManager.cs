@@ -21,7 +21,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToGameScene()
     {
         MenuSounds(playSound);
-        fader.FadeToNextScene("Game Scene");
+        fader.FadeToNextScene("GameSceneV2");
     }
 
     public void DisplaySettings()
@@ -30,10 +30,22 @@ public class MainMenuManager : MonoBehaviour
         anim.Play("Go To Settings");
     }
 
+    public void DisplayCredits()
+    {
+        MenuSounds(selectSound);
+        anim.Play("Go To Credits");
+    }
+
     public void SettingsToMain()
     {
         MenuSounds(selectSound);
         anim.Play("Settings To Main");
+    }
+
+    public void CreditsToMain()
+    {
+        MenuSounds(selectSound);
+        anim.Play("Credits To Main");
     }
 
     public void Quit()

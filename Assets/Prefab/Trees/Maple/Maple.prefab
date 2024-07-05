@@ -186,8 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb4bd33653d1ea4b9f02c14dc854393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  youngHealth: 0
-  grownHealth: 0
+  youngHealth: 1
+  grownHealth: 3
   ownType: {fileID: 7240929680316118649}
   spawnTime: 5
   maxSpawnRange: 4
@@ -200,9 +200,9 @@ MonoBehaviour:
     m_Bits: 768
   woodStack: {fileID: 4927122415603034462, guid: 300542bfc5451a242b6f3d1198d84733, type: 3}
   youngSpawnCount: 1
-  grownSpawnCount: 3
+  grownSpawnCount: 4
   spawnVelocity: 3.5
-  timeToGrow: 7
+  timeToGrow: 15
   growTimer: 0
 --- !u!95 &4799869458435665374
 Animator:
@@ -323,7 +323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &57561249775069139
 Transform:
   m_ObjectHideFlags: 0
@@ -522,7 +522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7007634930017546173
 Transform:
   m_ObjectHideFlags: 0

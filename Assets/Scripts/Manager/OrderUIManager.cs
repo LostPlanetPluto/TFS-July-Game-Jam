@@ -63,11 +63,15 @@ public class OrderUIManager : MonoBehaviour
 
     public void StartShake()
     {
+        if (isShake) return;
+
         isShake = true;
     }
 
     public void StopShake()
     {
+        if (!isShake) return;
+
         isShake = false;
 
         for (int i = 0; i < uiEndPositions.Count; i++)
